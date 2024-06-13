@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="stationColumn">Station Column</label>
+                            <input type="text" class="form-control" id="stationColumn">
+                        </div>
+                        <div class="form-group">
+                            <label for="elementColumn">Element Column</label>
+                            <input type="text" class="form-control" id="elementColumn">
+                        </div>
+                        <div class="form-group">
+                            <label for="periodColumn">Period Column</label>
+                            <input type="text" class="form-control" id="periodColumn">
+                        </div>
+                        <div class="form-group">
+                            <label for="elevationColumn">Elevation Column</label>
+                            <input type="text" class="form-control" id="elevationColumn">
+                        </div>
+                        <div class="form-group">
+                            <label for="valueColumn">Value Column</label>
+                            <input type="text" class="form-control" id="valueColumn" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flagColumn">Flag Column</label>
+                            <input type="text" class="form-control" id="flagColumn">
+                        </div>
+                        <div class="form-group">
+                            <label for="utcDifference">UTC Time Difference</label>
+                            <input type="number" class="form-control" id="utcDifference" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="scaledValues">Values Scaled</label>
+                            <select class="form-control" id="scaledValues">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="skipRows">Skip Rows</label>
+                            <input type="text" class="form-control" id="skipRows">
+                        </div>
+                        <div class="form-group">
+                            <label for="delimiters">Delimiters</label>
+                            <select class="form-control" id="delimiters">
+                                <option value=",">Option 1</option>
+                                <option value=";">Option 2</option>
+                                <option value="|">Option 3</option>
+                                <option value="tab">Option 4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="datetimeColumns">Datetime Column</label>
+                            <input type="text" class="form-control" id="datetimeColumns">
+                        </div>
+                        <div class="form-group">
+                            <label for="datetimeFormat">Datetime Format</label>
+                            <input type="text" class="form-control" id="datetimeFormat">
+                        </div>
+                        <div class="form-group">
+                            <label for="hourColumn">Hour Column</label>
+                            <input type="text" class="form-control" id="hourColumn">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-primary">Save</button>
+                        <div style="margin-left: 10px;"></div>
+                        <button type="button" class="btn btn-secondary">Edit</button>
+                        <div style="margin-left: 10px;"></div>
+                        <button type="button" class="btn btn-danger">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
