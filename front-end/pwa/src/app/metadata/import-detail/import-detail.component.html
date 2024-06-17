@@ -1,57 +1,97 @@
 <div class="container">
-    <div class="col-md-12 mb-4">
-        <div class="card">
-            <div class="card-body">
-    <div class="d-flex justify-content-between">
-        <h2>Import Data Source</h2>
-        <div class="d-flex">
-          <input type="file" id="importFile" accept=".csv">
-          <button type="button" class="btn btn-primary">Import CSV</button>
-        </div>
-      </div>     
-    </div>
-</div>
-</div> 
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
                     <form>
-                        <div class="form-group">
-                            <label for="stationColumn">Station Column</label>
-                            <input type="text" class="form-control" id="stationColumn">
+
+                        <!-- Station Column -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="stationCheckbox"
+                                   (change)="toggleCollapse('station')">
+                            <label class="form-check-label" for="stationCheckbox">Includes Station Column</label>
                         </div>
-                        <div class="form-group">
-                            <label for="elementColumn">Element Column</label>
-                            <input type="text" class="form-control" id="elementColumn">
+                        <div [ngClass]="{'collapse show': isCollapsed['station'], 'collapse': !isCollapsed['station']}">
+                            <div class="form-group ml-3">
+                                <label for="stationColumn">Column Position:</label>
+                                <input type="number" class="form-control" id="stationColumn">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="periodColumn">Period Column</label>
-                            <input type="text" class="form-control" id="periodColumn">
+
+                        <!-- Element Column -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="elementCheckbox"
+                                   (change)="toggleCollapse('element')">
+                            <label class="form-check-label" for="elementCheckbox">Includes Element Column</label>
                         </div>
-                        <div class="form-group">
-                            <label for="elevationColumn">Elevation Column</label>
-                            <input type="text" class="form-control" id="elevationColumn">
+                        <div [ngClass]="{'collapse show': isCollapsed['element'], 'collapse': !isCollapsed['element']}">
+                            <div class="form-check ml-3">
+                                <input type="radio" class="form-check-input" name="elementColumn" id="singleElement" (change)="toggleElementType('single')" value="single">
+                                <label for="singleElement">Single Column</label>
+                            </div>
+                            <div class="form-check ml-3">
+                                <input type="radio" class="form-check-input" name="elementColumn" id="multipleElement" (change)="toggleElementType('multiple')" value="multiple">
+                                <label for="multipleElement">Multiple Column</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="valueColumn">Value Column</label>
-                            <input type="text" class="form-control" id="valueColumn" required>
+                        <div [ngClass]="{'collapse show': isElementSingle, 'collapse': !isElementSingle}">
+                            <div class="form-group ml-3">
+                                <label for="singleElementPosition">Single Column Position:</label>
+                                <input type="number" class="form-control" id="singleElementPosition">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="flagColumn">Flag Column</label>
-                            <input type="text" class="form-control" id="flagColumn">
+                        <div [ngClass]="{'collapse show': !isElementSingle, 'collapse': isElementSingle}">
+                            <div class="form-group ml-3">
+                                <label for="multipleElementPositions">Multiple Column Positions:</label>
+                                <input type="text" class="form-control" id="multipleElementPositions" placeholder="e.g. 2,3,4">
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="elementIds">Element IDs:</label>
+                                <input type="text" class="form-control" id="elementIds" placeholder="e.g. 101,102,103">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="utcDifference">UTC Time Difference</label>
-                            <input type="number" class="form-control" id="utcDifference" value="0">
+
+                        <!-- Period Column -->
+                        <div class="form-check mb-3">
+                            <input type="radio" class="form-check-input" name="periodColumn" id="includesPeriod" (change)="toggleCollapse('period')">
+                            <label class="form-check-label" for="includesPeriod">Includes Period Column</label>
                         </div>
-                        <div class="form-group">
-                            <label for="scaledValues">Values Scaled</label>
-                            <select class="form-control" id="scaledValues">
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
+                        <div [ngClass]="{'collapse show': isCollapsed['period'], 'collapse': !isCollapsed['period']}">
+                            <div class="form-group ml-3">
+                                <label for="periodColumn">Column Position:</label>
+                                <input type="number" class="form-control" id="periodColumn">
+                            </div>
                         </div>
+                        
+                        <!-- Does not Include Period Column -->
+                        <div class="form-check mb-3">
+                            <input type="radio" class="form-check-input" name="periodColumn" id="excludesPeriod" (change)="toggleCollapse('noPeriod')">
+                            <label class="form-check-label" for="excludesPeriod">Does not Include Period Column</label>
+                        </div>
+                        <div [ngClass]="{'collapse show': isCollapsed['noPeriod'], 'collapse': !isCollapsed['noPeriod']}">
+                            <div class="form-group ml-3">
+                                <label for="defaultPeriod">Default Period:</label>
+                                <input type="number" class="form-control" id="defaultPeriod">
+                            </div>
+                        </div>
+
+                        <!-- Includes Elevation Column -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="elevationCheckbox"
+                                   (change)="toggleCollapse('elevation')">
+                            <label class="form-check-label" for="elevationCheckbox">Includes Elevation Column</label>
+                        </div>
+                        <div [ngClass]="{'collapse show': isCollapsed['elevation'], 'collapse': !isCollapsed['elevation']}">
+                            <div class="form-group ml-3">
+                                <label for="elevationColumn">Column Position:</label>
+                                <input type="number" class="form-control" id="elevationColumn">
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="elevationValueColumn">Value Column Position:</label>
+                                <input type="number" class="form-control" id="elevationValueColumn">
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -60,36 +100,79 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <form>
-                        <div class="form-group">
-                            <label for="skipRows">Skip Rows</label>
-                            <input type="text" class="form-control" id="skipRows">
+                        <!-- Includes Flag Column -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="flagCheckbox"
+                                   (change)="toggleCollapse('flag')">
+                            <label class="form-check-label" for="flagCheckbox">Includes Flag Column</label>
                         </div>
-                        <div class="form-group">
-                            <label for="delimiters">Delimiters</label>
-                            <select class="form-control" id="delimiters">
+                        <div [ngClass]="{'collapse show': isCollapsed['flag'], 'collapse': !isCollapsed['flag']}">
+                            <div class="form-group ml-3">
+                                <label for="flagColumn">Column Position:</label>
+                                <input type="number" class="form-control" id="flagColumn">
+                            </div>
+                            <div class="form-group ml-3">
+                                <label for="utcDifference">UTC Time Difference:</label>
+                                <input type="number" class="form-control" id="utcDifference" value="0">
+                            </div>
+                        </div>
+
+                        <!-- Includes Scale Values -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="scaleValuesCheckbox"
+                                   (change)="toggleCollapse('scale')">
+                            <label class="form-check-label" for="scaleValuesCheckbox">Scale Values</label>
+                        </div>
+
+                        <!-- Skip First Rows -->
+                        <div class="form-group mb-3">
+                            <label for="skipRows">Rows to Skip:</label>
+                            <input type="number" class="form-control" id="skipRows">
+                        </div>
+
+                        <!-- Delimiters -->
+                        <div class="form-group mb-3">
+                            <label for="delimiter">Delimiter:</label>
+                            <select class="form-control" id="delimiter">
                                 <option value=",">Option 1</option>
                                 <option value=";">Option 2</option>
-                                <option value="|">Option 3</option>
-                                <option value="tab">Option 4</option>
+                                <option value="\t">Option 3</option>
+                                <option value=" ">Option 4</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="datetimeColumns">Datetime Column</label>
-                            <input type="text" class="form-control" id="datetimeColumns">
+
+                        <!-- DateTime Columns -->
+                        <div class="form-group mb-3">
+                            <label for="dateTimeColumns">DateTime Columns:</label>
+                            <input type="text" class="form-control" id="dateTimeColumns">
                         </div>
-                        <div class="form-group">
-                            <label for="datetimeFormat">Datetime Format</label>
-                            <input type="text" class="form-control" id="datetimeFormat">
+
+                        <!-- DateTime Format -->
+                        <div class="form-group mb-3">
+                            <label for="dateTimeFormat">DateTime Format:</label>
+                            <input type="text" class="form-control" id="dateTimeFormat">
                         </div>
-                        <div class="form-group">
-                            <label for="hourColumn">Hour Column</label>
-                            <input type="text" class="form-control" id="hourColumn">
+
+                        <!-- Hour Column -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="hourColumnCheckbox"
+                                   (change)="toggleCollapse('hourColumn')">
+                            <label class="form-check-label" for="hourColumnCheckbox">Includes Hour Column</label>
                         </div>
+                        <div [ngClass]="{'collapse show': isCollapsed['hourColumn'], 'collapse': !isCollapsed['hourColumn']}">
+                            <div class="form-group ml-3">
+                                <label for="hourColumn">Column Position:</label>
+                                <input type="number" class="form-control" id="hourColumn">
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Buttons -->
     <div class="row justify-content-end">
         <div class="col-md-6">
             <div class="card">
@@ -97,16 +180,12 @@
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-primary">Save</button>
                         <div style="margin-left: 10px;"></div>
-                        <button type="button" class="btn btn-secondary">Edit</button>
+                        <button type="button" class="btn btn-secondary">Preview</button>
                         <div style="margin-left: 10px;"></div>
-                        <button type="button" class="btn btn-danger">Reset</button>
+                        <button type="button" class="btn btn-danger">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
- 
